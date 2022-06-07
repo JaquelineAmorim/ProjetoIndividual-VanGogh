@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Van Gogh | Home</title>
+
+    <script src="./js/funcoes.js"></script>
+
+    <link rel="icon" href="../ASSETS/icon/van gogh.jpg">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="headerIcon">
+                <img class="iconImg" src="../assets/icon/van gogh.jpg" alt="iconHeader">
+                <h1 class="title">Van Gogh</h1>
+            </div>
+            <ul class="navbar">
+                <li class="now">Home</li>
+                <li>
+                    <a href="./artigo.html">Beyond</a>
+                </li>
+                <li>
+                    <a href="./login.html">Login</a>
+                </li>
+                <li>
+                    <a href="./cadastro.html">Cadastro</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="container">
+            <h2 class="cardInfo">
+                Entre no mundo de Vicente Willen Van Gogh (1853-1890), um
+                pintor holandês do final do século XIX e um dos maiores expoentes do pós-impressionismo.
+                Sua vida conturbada se misturou à grande paixão pela arte,
+                nos deixando um legado grandioso e emocionante.
+                O pintor tinha o hábito de escrever muitas cartas ao seu irmão Theo,
+                o que nos permite entrar em contato com suas reflexões sobre a vida e a criação.
+                <br> <br>
+                <div class="focusPhrase">
+                    <i> <b>
+                            "O que seria a vida se não tivéssemos
+                            coragem de tentar nada?"
+                    </i> </b>
+                </div>
+            </h2>
+        </div>
+    </div>
+
+    <div class="mainPaintings">
+        <h1 class="titlesBox">OBRAS</h1>
+        <div class="container">
+            <div class="boxes">
+                <div class="box" onclick="openModalBedroom()">
+                    <img class="paittings" src="../ASSETS/imgs/bedroomBox2.jpg">
+                    <h4 class="btn">O quarto em Arles</h4>
+                    <p>1888
+                    </p>
+                </div>
+
+                <div class="box" onclick="openModalCafe()">
+                    <img class="paittings" src="../assets/imgs/café.jpg">
+                    <h4 class="btn">Terraço do Café na Praça</h4>
+                    <p>1888</p>
+                </div>
+
+                <div class="box" onclick="openModalAlmond()">
+                    <img src="../assets/imgs/primavera.jpg">
+                    <h4 class="btn">Amendoeira em Flor</h4>
+                    <p>1890</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="boxes">
+                <div class="box" onclick="openModalLilies()">
+                    <img src="../assets/imgs/lilies.webp">
+                    <h4 class="btn">Vaso de Lírios</h4>
+                    <p> 1890
+                    </p>
+                </div>
+
+                <div class="box" onclick="openModalSunflower()">
+                    <img src="../assets/imgs/girassóis.jpg">
+                    <h4 class="btn">Os Girassóis</h4>
+                    <p>1962</p>
+                </div>
+
+                <div class="box" onclick="openModalSelf()">
+                    <img src="../assets/imgs/autoRetratoimg.jpg">
+                    <h4 class="btn">Auto-Retrato</h4>
+                    <p>1889
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <h4>Jaqueline Oliveira Amorim &hearts;SPTech &copy; 2022</h4>
+            <h6>v1.0.1</h6>
+        </div>
+    </div>
+</body>
+
+<div id="modalSunflower" ; class="modalPainting">
+    <div class="modalReadPlus">
+        <div class="borderModal">
+            <div class="containerReadPlus">
+                <button onclick="buttonBack()" class="modalBack">&times;</button>
+            </div>
+            <h2>
+                Van Gogh adorava amarelo, esta cor era
+                para ele, um símbolo de felicidade, por isso natural que se
+                sentisse atraído pelos girassóis, pela sua “cor vibrante” e
+                também pela sua forma. “O girassol é uma planta muito forte
+                e resistente. É elegante e refinada. Ele chamava-lhe
+                ‘girassol rústico’. Tem a aspereza e afalta de polidez do
+                campo, de que ele gostava muito” <br>Ao saber do seu
+                suicídio, Claude Monet, que tinha elogiado os girassóis
+                expostos no restaurante de Paris, questionou: “Como é que
+                um homem que amava tanto as flores e a luz que as retratou
+                tão bem podia ter vivido tão infeliz?”. Mesmo na morte, as
+                flores que o holandês “amava tanto” nunca o abandonaram —
+                durante anos, o seu médico e amigo Paul Gachet, plantou
+                girassóis junto à sua campa. </h2>
+            <button class="buttonModal" onclick="buttonBack()">
+                Fechar
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="modalCafe" ; class="modalPainting">
+    <div class="modalReadPlus">
+        <div class="borderModal">
+            <div class="containerReadPlus">
+                <button onclick="buttonBack()" class="modalBack">&times;</button>
+            </div>
+            <h2>
+                Este trabalho pertence ao período durante o qual Van Gogh esteve em Arles. A noite dessa pequena cidade
+                provençal apaixonou o artista, que saía para pintar as estrelas, sua paisagem, seus cafés e suas luzes
+                noturnas (naturais ou artificiais).
+                Dizia o artista: "freqüentemente me parece que a noite é bem mais viva e ricamente colorida que o dia".
+                Muitas vezes o sol ofusca a beleza das cores.</h2>
+            <button class="buttonModal" onclick="buttonBack()">
+                Fechar
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="modalAlmond" ; class="modalPainting">
+    <div class="modalReadPlus">
+        <div class="borderModal">
+            <div class="containerReadPlus">
+                <button onclick="buttonBack()" class="modalBack">&times;</button>
+            </div>
+            <h2>
+                O quadro Amendoeira em Flor (Almond Blossom) (1890), de Vincent van Gogh, é parte de uma série de
+                pinturas
+                que o artista fez com esta espécie botânica. O fato interessante em torno dessa pintura é que ela foi
+                feita
+                por Van Gogh como uma celebração à vida. Em 31 de janeiro de 1890, Theo, irmão do pintor, escreveu a ele
+                informando que seu filho havia nascido, a quem ele chamara de Vincent Willem, em uma homenagem ao irmão.
+                Com
+                essa notícia, Van Gogh criou a pintura, que consiste nos galhos poderosos da amendoeira florindo em um
+                fundo
+                turquesa simulando o céu.
+            </h2>
+            <button class="buttonModal" onclick="buttonBack()">
+                Fechar
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="modalLilies" ; class="modalPainting">
+    <div class="modalReadPlus">
+        <div class="borderModal">
+            <div class="containerReadPlus">
+                <button onclick="buttonBack()" class="modalBack">&times;</button>
+            </div>
+            <h2>
+                Van Gogh pintou essa natureza morta no hospital psiquiátrico de Saint-Rémy. Para ele, a pintura era
+                principalmente um estudo em cores. Ele procurou alcançar um contraste de cores poderoso. Ao colocar as
+                flores roxas contra um fundo amarelo, ele fez as formas decorativas se destacarem ainda mais fortemente.
+                As flores eram originalmente roxas. Mas quando o pigmento vermelho se desvaneceu, ficaram azuis.
+            </h2>
+            <button class="buttonModal" onclick="buttonBack()">
+                Fechar
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="modalBedroom" ; class="modalPainting">
+    <div class="modalReadPlus">
+        <div class="borderModal">
+            <div class="containerReadPlus">
+                <button onclick="buttonBack()" class="modalBack">&times;</button>
+            </div>
+            <h2>
+                A primeira tela foi pintada logo após a instalação de Van Gogh na sua querida Casa Amarela de Arles.
+                Este foi um momento feliz da sua vida. Ele estava contente com o resultado do seu trabalho e com a
+                presença do seu amigo Gauguin. Este primeiro quadro apresenta cores vivas e pinceladas fortes e é a
+                representação fiel do seu pequeno quarto e oferece um sentimento de ordem e de paz com suas cores
+                vivas controladas.
+            </h2>
+            <button class="buttonModal" onclick="buttonBack()">
+                Fechar
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="modalSelf" ; class="modalPainting">
+    <div class="modalReadPlus">
+        <div class="borderModal">
+            <div class="containerReadPlus">
+                <button onclick="buttonBack()" class="modalBack">&times;
+                </button>
+            </div>
+            <h2>
+                Para Vincent, pintar a si mesmo não era só um estilo de arte, mas também uma forma de melhorar
+                suas técnicas artísticas e de se conhecer melhor – tudo isso graças ao processo introspectivo ao
+                qual se submetia, já que ficava horas diante de um espelho observando-se criticamente.
+                Este foi o último dos autorretratos pintados por ele enquanto esteve internado no asilo de
+                Saint-Rémy, para onde foi por vontade própria em maio de 1889.
+            </h2>
+            <button class="buttonModal" onclick="buttonBack()">
+                Fechar
+            </button>
+        </div>
+    </div>
+</div>
+
+</html>

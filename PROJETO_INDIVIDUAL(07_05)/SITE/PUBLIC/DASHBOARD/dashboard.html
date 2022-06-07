@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Van Gogh | Dashboards</title>
+
+  <link rel="shortcut icon" href="../ASSETS/icon/van gogh.jpg" type="image/ x-icon">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="dashboards.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <script src="../JS/funcoes.js"></script>
+  <script type="text/javascript" src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
+
+
+</head>
+
+<body onload="validarSessao(), atualizarFeed() ">
+
+  <div class="janela">
+    <div class="header-left">
+      <h1 class="titlesBox">Van Gogh</h1>
+
+      <div class="hello">
+        <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+      </div>
+
+      <div id="div_quadro">
+
+      </div>
+
+
+      <h2>
+        Bem vindo a sua conta! <br>
+        Estamos trabalhando e nos atualizando para sua melhor experênica.
+      </h2>
+
+      <div>
+        <a href="../DASHBOARD/dashboard.html">
+          <h3 class="buttonDash">Gráficos</h3>
+        </a>
+      </div>
+
+
+      <div class="buttonLogout" onclick="limparSessao()">
+        <h3>Sair</h3>
+      </div>
+
+    </div>
+
+    <div class="dash">
+      <div class="containerGraph">
+        <h1 class="titlesDash">
+          Olá <span id="l_usuario" style="color: #e3b062;"></span>
+          , bem vindo a sua Dashboard! <br>
+          <br> Veja quantas pessoas curtem o mesmo quadro que você:
+        </h1> <br>
+        <div class="modalReadPlus">
+          <div class="graphyc">
+            <canvas id="graficoDados2"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash2">
+        <div class="dashComentario">
+          <h2>
+            Quantos quadros em média do nosso querido Van Gogh você conhece?
+          </h2>
+          <h4>
+            (Digite no campo a baixo e calcule!)
+          </h4>
+          <input type="number" id="input_number">
+          <button onclick="calcular()" class="select">
+            Calcular
+          </button>
+          <div id="div_exibir" class="fraseDash"></div>
+        </div>
+
+        <div class="btns-dash">
+          <!-- O gráfico é chamado de acordo com o id (fkUsuario,idQuadro) do banco  -->
+
+          <div class="boxDash">
+            <img src="../ASSETS/imgs/gifNoiteEstrelada.gif">
+            <button onclick="resultadoQuadro1()" class="btn">
+              Noite Estrelada
+            </button>
+          </div>
+          <div class="boxDash">
+            <img src="../ASSETS/imgs/gifAutoRetrato.webp">
+            <button onclick="resultadoQuadro2()" class="btn">
+              Auto-Retrato
+            </button>
+          </div>
+          <div class="boxDash">
+            <img src="../ASSETS/imgs/gifVinha.gif">
+            <button onclick="resultadoQuadro3()" class="btn">
+              Vinha Encarnada
+            </button>
+          </div>
+
+
+        </div>
+
+
+        <div class="dashComentario">
+          <div id="quadroCorreto">
+          </div>
+          <div id="div_exibirQuadro" class="fraseDash">
+          </div>
+          <h1>
+            Você sabia?
+          </h1>
+          <h2> Esses são os quadros mais comentados de Van Gogh<br>
+          </h2>
+          Deixe aqui também seus comentários sobre eles: <br> <br>
+          <input type="text" id="input_comentarios">
+          <button onclick="cadastrarComentario()" class="select">
+            Cadastrar comentário
+          </button>
+        </div>
+        <div id="div_exibirComentario" class="comentario"></div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+
+</html>
+
+<script>
+
+  var proximaAtualizacao;
+
+  window.onload = ObterQuadro();
+
+  b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+  l_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+
+  //verificar_autenticacao();
+
+  function alterarTitulo(idQuadro) {
+    var tituloQuadro = document.getElementById("tituloQuadro")
+    tituloQuadro.innerHTML = "Pessoas que também escolheram <span style='color: #e6005a'>Quadro " + idQuadro + "</span>"
+  }
+
+  function ObterQuadro() {
+    //  alterarTitulo(idUsuario)
+    if (proximaAtualizacao != undefined) {
+      clearTimeout(proximaAtualizacao);
+    }
+
+    fetch(`/medidas/ultimas`, { cache: 'no-store' }).then((response) => {
+      if (response.ok) {
+        response.json().then((resposta) => {
+          const quad1 = resposta.Quadro[0][0].qtdQuadro;
+          const quad2 = resposta.Quadro[1][0].qtdQuadro;
+          const quad3 = resposta.Quadro[2][0].qtdQuadro;
+
+          plotarGrafico2(quad1, quad2, quad3);
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+
+  function plotarGrafico2(quad1, quad2, quad3) {
+    var dados = {
+      labels: ["Quadros"],
+      datasets: [
+        {
+          yAxisID: "y-like",
+          label: "Noite Estrelada",
+          borderColor: "#000000",
+          backgroundColor: "#02006d",
+          fill: false,
+          data: [],
+        },
+        {
+          yAxisID: "y-like2",
+          label: "Auto-retrato",
+          borderColor: "#000000",
+          backgroundColor: "#212124",
+          fill: false,
+          data: [],
+        },
+        {
+          yAxisID: "y-like3",
+          label: "Vinha Encarnada",
+          borderColor: "#000000",
+          backgroundColor: "#f1a604",
+          fill: false,
+          data: [],
+        },
+      ],
+    };
+
+    dados.datasets[0].data.push(quad1);
+    dados.datasets[1].data.push(quad2);
+    dados.datasets[2].data.push(quad3);
+
+    var ctx = graficoDados2.getContext("2d");
+    window.grafico_bar = Chart.Bar(ctx, {
+      data: dados,
+      options: {
+        responsive: true,
+        animation: { duration: 500 },
+        hoverMode: "index",
+        stacked: false,
+        title: {
+          display: true,
+          text: "",
+        },
+        scales: {
+          yAxes: [
+            {
+              type: "linear",
+              display: true,
+              position: "left",
+              id: "y-like",
+              ticks: {
+                beginAtZero: true,
+                max: 10,
+                min: 0,
+              },
+            },
+            {
+              type: "linear",
+              display: false,
+              position: "right",
+              id: "y-like2",
+              ticks: {
+                beginAtZero: true,
+                max: 10,
+                min: 0,
+              },
+
+              gridLines: {
+                drawOnChartArea: true,
+              },
+            },
+            {
+              type: "linear",
+              display: false,
+              position: "right",
+              id: "y-like3",
+              ticks: {
+                beginAtZero: true,
+                max: 10,
+                min: 0,
+              },
+
+              gridLines: {
+                drawOnChartArea: true,
+              },
+            },
+          ],
+        },
+      },
+    });
+    setTimeout(() => {
+      atualizarGrafico2(dados)
+    }, 2000);
+  }
+
+  function atualizarGrafico2(dados) {
+
+    console.log("entrou");
+    fetch(`/medidas/ultimas`, { cache: 'no-store' }, {
+    }).then((response) => {
+      if (response.ok) {
+        response.json().then((resposta) => {
+
+          const NewaParm1 = resposta.Quadro[0][0].qtdQuadro;
+          const NewaParm2 = resposta.Quadro[1][0].qtdQuadro;
+          const NewaParm3 = resposta.Quadro[2][0].qtdQuadro;
+
+          dados.datasets[0].data = [];
+          dados.datasets[1].data = [];
+          dados.datasets[2].data = [];
+
+          dados.datasets[0].data.push(NewaParm1);
+          dados.datasets[1].data.push(NewaParm2);
+          dados.datasets[2].data.push(NewaParm3);
+
+
+          window.grafico_bar.update();
+
+          setTimeout(() => {
+            atualizarGrafico2(dados)
+          }, 2000);
+
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+
+        setTimeout(() => {
+          atualizarGrafico2(dados)
+        }, 2000);
+      }
+    })
+      .catch(function (error) {
+        setTimeout(() => {
+          atualizarGrafico2(dados)
+        }, 2000);
+      });
+
+  }
+</script>
+
+<!-- // O gráfico é construído com três funções: -->
+<!-- // 1. obterDadosGrafico -> Traz dados do Banco de Dados para montar o gráfico  -->
+<!-- da primeira vez -->
+<!-- // 2. plotarGrafico -> Monta o gráfico com os dados trazidos e exibe em tela -->
+<!-- // 3. atualizarGrafico -> Atualiza o gráfico, trazendo novamente dados do  -->
+<!-- Banco -->
+<!-- // Esta função *obterDadosGrafico* busca os últimos dados inseridos em tabela  -->
+<!-- de medidas. -->
+<!-- // para, quando carregar o gráfico da primeira vez, já trazer com vários  -->
+<!-- dados. -->
+<!-- // A função *obterDadosGrafico* também invoca a função *plotarGrafico* -->
+<!-- //     Se quiser alterar a busca, ajuste as regras de negócio em src/ -->
+<!-- controllers -->
+<!-- //     Para ajustar o "select", ajuste o comando sql em src/models -->
